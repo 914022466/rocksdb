@@ -149,12 +149,8 @@ double HistogramStat::Percentile(double p) const {
       uint64_t left_point = (b == 0) ? 0 : bucketMapper.BucketLimit(b-1);
       uint64_t right_point = bucketMapper.BucketLimit(b);
       uint64_t left_sum = cumulative_sum - bucket_value;
-      uint64_t right_sum = cumulative_sum;
       double pos = 0;
-      uint64_t right_left_diff = right_sum - left_sum;
-      if (right_left_diff != 0) {
-       pos = (threshold - left_sum) / right_left_diff;
-      }
+      pos = (threshold - left_sum) / bucket_value;
       double r = left_point + (right_point - left_point) * pos;
       uint64_t cur_min = min();
       uint64_t cur_max = max();
